@@ -1,10 +1,12 @@
 # Mini Modal
 
 Minimal async modal functionality for simple apps.
-You can await for a form input or
+You can await for form input, create spinners or display closeable warnings.
 
-## minimal API
+Minimal HTML code used (mainly for blocker div) you can use your own
+defined in html template tags.
 
+## Features:
 * create modal windows from html templates
 * open modal and await for it in async functions or modules
 * alternatively, listen to `submitModal` or `cancelModal` messages
