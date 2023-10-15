@@ -1,6 +1,6 @@
 # Mini Modal
 
-Minimal async modal functionality for simple apps.
+Minimal async modal functionality for simple apps. (~840 bytes minified/gzipped)
 You can await for form input, create spinners or display closeable warnings.
 
 Minimal HTML code used (mainly for blocker div) you can use your own
