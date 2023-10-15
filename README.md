@@ -51,3 +51,8 @@ Template can contain style :
 	</style>
 </template>
 ```
+
+## Exaples:
+
+Simple form: https://goteguru.github.io/MiniModal/examples/form.html
+Petit vue integration (if you want it): https://goteguru.github.io/MiniModal/examples/petit-vue.html
