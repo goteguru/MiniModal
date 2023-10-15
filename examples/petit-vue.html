@@ -3,15 +3,13 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Modal with petit vue</title>
-		<script src="https://unpkg.com/petite-vue" defer init></script>
-		<script type="text/javascript">
-			import { createApp, reactive } from '/petite-vue.js'
-			import { Modal } from './modal.js'
-			// example:  custom form, with reactive elements
-			// in case of ESC (close) throw an exception
+		<script src="https://unpkg.com/petite-vue"></script>
+		<script type="module" defer>
+			import { Modal } from '../modal.js'
 			try {
 				const mymod = new Modal('#form-tpl', { exception: true })
-				createApp().mount(mymod.root)
+				// you must mount the app *after* creating the modal form
+				PetiteVue.createApp().mount(mymod.root)
 				const values = await mymod.open()
 				console.log("Modal returned:", values)
 			} catch (e) {
@@ -20,33 +18,32 @@
 		</script>
 	</head>
 	<body>
-		<h1>Example</h1>
+		<h1>Example site content</h1>
+		Press reload to redisplay modal.
+		(check console for info)
 		<template id="form-tpl">
-			<div class="modal-window" v-scope="{counter:0, modalTitle:'reaktívmodal: ', modalText:'hoho'}">
-				<h1>
-					{{modalTitle}}{{counter}}
-					<div class="modal-cancel" name="esc">×</div>
-				</h1>
+			<div class="modal-window" v-scope="{counter:0}">
+				<h1>Reactive modal test<div class="modal-cancel" name="esc">×</div></h1>
 				<div class="modal-text">
-					<p>{{modalText}}</p>
-					<input type="input" name="kerdes" value="x">
-					<input type="input" name="counter" :value="counter" >
+					<input type="input" name="question" placeholder="type your answer...">
+					<input type="input" name="counter" :value="counter" size="3">
 				</div>
 				<div class="modal-buttonrow">
-					<button type="button" name="inc" @click="counter++">Inc</button>
-					<button type="button" name="ok" class="modal-submit" value="okégomb">Ok</button>
+					<button type="button" name="inc" @click="counter++">Increase</button>
+					<button type="button" name="ok" class="modal-submit" value="ok">Ok</button>
 				</div>
 			</div>
 			<style media="screen">
 				.modal-background { background-color: rgb(10,10,10,0.5) }
-				.modal-window { width: 40%; height: 300px; background-color: #fff; margin:auto; position: relative;
+				.modal-window { width: 40%; height: fit-content; background-color: #fff; margin:auto; position: relative;
 					border: 2px solid black; margin-top: 5%; display:flex;
 					flex-direction: column; justify-content: space-between;
 				}
-				.modal-window button {min-width: 110px}
-				.modal-window h1 {font-size: 22pt; background-color: #fee; margin-top:0; }
+				.modal-text { padding: 20px;}
+				.modal-window button {min-width: 90px}
+				.modal-window h1 {font-size: 22pt; background-color: #eee; padding:4px; margin:0 }
 				.modal-window .modal-cancel{ margin:0; width: 20px ; display: block; height: 20px; position:absolute; top:0; right:0; }
-				.modal-buttonrow { bottom:0; left:0; width:100%}
+				.modal-buttonrow { bottom:0; left:0; width:100%; display: flex; flex-direction: row; justify-content: space-around; margin:10px}
 			</style>
 		</template>
 	</body>
