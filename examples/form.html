@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<title>modal example</title>
+		<script type="module">
+			import { Modal } from '../modal.js'
+			document.getElementById('site').innerHTML = "lorem ipsum ".repeat(300)
+			console.log('Opening Modal form')
+			const modalForm = new Modal('#form-template')
+
+			// run using await in any module...
+			const values = await modalForm.open()
+			document.getElementById('output').innerHTML = JSON.stringify(values)
+			console.log("Values from modal form:", values)
+
+			// ... or run in any async function
+			document.getElementById('open').addEventListener('click', async _=>{
+				const answ = await modalForm.open()
+				console.log("Values from modal form:", answ)
+				document.getElementById('output').innerHTML = JSON.stringify(answ)
+			})
+
+			// simple question (without form), recreated from template every time
+			document.getElementById('open-mini').addEventListener('click', async _=>{
+				const miniForm = new Modal('#mini-template')
+				const answ = await miniForm.open()
+				console.log("Values from modal form:", answ)
+				document.getElementById('output').innerHTML = JSON.stringify(answ)
+				// miniForm deallocated here
+			})
+
+		</script>
+		<style media="screen">
+			.modal-background { background-color: rgb(10,10,10,0.5) }
+			body { text-align: center; }
+			p,div {margin-bottom: 20px}
+			.modal-window { width: 300px; height: fit-content; background-color: #fefefe; margin:auto; position: relative;
+				margin-top: 5%; display:flex; flex-direction: column; justify-content: space-between; padding: 20px;
+			}
+			.modal-window button {min-width: 80px}
+			.modal-window input { margin: 10px;}
+		</style>
+	</head>
+	<body>
+		<p id="site">
+		</p>
+		<button id="open">Open Modal</button>
+		<button id="open-mini">Open Mini</button>
+		<div id="output" style="margin-top:20px"></div>
+
+		<template id="form-template">
+			<form class="modal-window">
+				<h1>Can you answer?</h1>
+				<div class="modal-submit" name="esc">×</div>
+				<div>
+					<label for="question">Question:</label>
+					<input type="input" id="question" name="Question" value="some-default">
+					<div>
+						<label for="radio-a">Answer A:</label>
+						<input id="radio-a" type="radio" name="radioAnswer" value="A">
+						<label for="radio-b">Answer B:</label>
+						<input id="radio-b" type="radio" name="radioAnswer" value="B">
+					</div>
+				</div>
+				<div class="modal-buttonrow">
+					<button type="submit" name="button" value="yes">yes</button>
+					<button type="submit" name="button" value="no">no</button>
+					<button type="submit" name="button" value="dunno">dunno</button>
+				</div>
+			</form>
+			<!-- Additional style from template -->
+			<style media="screen">
+				.modal-background { background-color: rgb(10,10,10,0.6) }
+				.modal-submit { margin:0; display: block; width: 20px; height: 20px; position:absolute; top:0; right:0; cursor:pointer;}
+				.modal-buttonrow { bottom:0; left:0; width:100%}
+			</style>
+		</template>
+		<template id="mini-template">
+			<div class="warning">
+				<h1>Warning!</h1>
+				<div class="buttonrow">
+					<button class="modal-submit">ok</button>
+				</div>
+			</div>
+			<style media="screen">
+				.warning { width: 30%; max-height: 300px; background-color: #f99; margin:auto; border-radius: 20px; }
+			</style>
+		</template>
+	</body>
+</html>
