@@ -37,6 +37,11 @@ export function Modal(tpl, { exception=false, interactive=true } = {}) {
 	this.root.classList.add('modal-background')
 	this.root.appendChild(clone)
 
+	this.root.addEventListener("click", e => {
+		if(e.target == this.root)
+			this.root.dispatchEvent(new Event("cancelModal"))
+	})
+
 	this.root.addEventListener("cancelModal", _ => {
 		this.root.parentNode?.removeChild(this.root)
 		this.exception
